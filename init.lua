@@ -21,6 +21,8 @@ vim.o.winborder = "single"
 vim.o.showmode = false
 -- keymaps
 vim.g.mapleader = " "
+vim.keymap.set({ "n", "v" }, ";", ":", { noremap = true })
+vim.keymap.set({ "n", "v" }, ":", ";", { noremap = true })
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { silent = true, noremap = true }) -- yank to clipboard
 vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p', { silent = true, noremap = true }) -- paste from clipboard
 vim.keymap.set("v", "p", '"_dP', { silent = true, noremap = true }) -- paste without overwriting register
@@ -70,7 +72,6 @@ vim.pack.add({
 	"https://github.com/williamboman/mason-lspconfig.nvim",
 	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
-	"https://github.com/stevearc/conform.nvim",
 	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.7.0" },
 })
 -- colortheme
@@ -173,7 +174,11 @@ require("lualine").setup({
 		},
 		lualine_c = {
 			{ "branch", icon = { "\u{e0a0}", color = { fg = colors.text } } },
-			{ "diff", colored = true, symbols = { added = "+", modified = "~", removed = "-" } },
+			{
+				"diff",
+				colored = true,
+				symbols = { added = "+", modified = "~", removed = "-" },
+			},
 		},
 		lualine_x = { { "lsp_status", icon = " ", symbols = { separator = " \u{e0bf} " } } },
 		lualine_y = { { "filetype", colored = false, icon = { align = "right" } } },
@@ -245,33 +250,28 @@ require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 require("mason").setup({})
 require("mason-lspconfig").setup({ ensure_installed = {}, automatic_installation = false })
 -- conform
-require("conform").setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		rust = { "rustfmt", lsp_format = "fallback" },
-		c = { "clang-format" },
-		bash = { "shfmt" },
-		javascript = { "prettierd", "prettier", stop_after_first = true },
-		typescript = { "prettierd", "prettier", stop_after_first = true },
-		css = { "prettierd", "prettier", stop_after_first = true },
-		html = { "prettierd", "prettier", stop_after_first = true },
-	},
-	format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
-})
 -- lsp settings
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
 	callback = function(ev)
 		local options = { buffer = ev.buf, silent = true }
-		vim.keymap.set("n", "<leader>lf", function()
-			require("conform").format({ lsp_format = "fallback" })
-		end, options) -- LSP format file
+		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, options) -- LSP format file
 		vim.keymap.set({ "n", "x" }, "<leader>lc", vim.lsp.buf.code_action, options) -- See available code actions
 		vim.keymap.set("n", "<leader>ld", fzf_lua.diagnostics_document, options) -- Show document diagnostics
 		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, options) -- Smart rename
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, options) -- Show documentation (hover)
 		vim.keymap.set("n", "<leader>lD", vim.lsp.buf.definition, options) -- Go to LSP definition
 		vim.keymap.set("n", "<leader>lR", fzf_lua.lsp_references, options) -- Show LSP references
+	end,
+})
+vim.api.nvim_create_autocmd("BufWritePre", {
+	callback = function()
+		local mode = vim.api.nvim_get_mode().mode
+		local filetype = vim.bo.filetype
+		if vim.bo.modified == true and mode == "n" and filetype ~= "oil" then
+			vim.lsp.buf.format()
+		else
+		end
 	end,
 })
 -- blink
