@@ -121,7 +121,7 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 -- lualine
-local colors = { text = "#e0e0e0", hl = "#303030", bg = "#202020" }
+local colors = { text = "#e0e0e0", hl = "#282828", bg = "#181818" }
 local my_theme = {
 	normal = {
 		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
