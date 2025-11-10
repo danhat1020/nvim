@@ -45,6 +45,10 @@
       "rev": "7e1cd77",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "render-markdown.nvim": {
+      "rev": "6a744f0",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
+    },
     "vague.nvim": {
       "rev": "dba2805",
       "src": "https://github.com/vague-theme/vague.nvim"

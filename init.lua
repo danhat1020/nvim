@@ -73,6 +73,7 @@ vim.pack.add({
 	"https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
 	"https://github.com/neovim/nvim-lspconfig",
 	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.7.0" },
+	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
 })
 -- colortheme
 require("vague").setup({
@@ -158,8 +159,8 @@ require("lualine").setup({
 	options = {
 		icons_enabled = true,
 		theme = my_theme,
-		section_separators = {},
-		component_separators = { left = "|", right = "|" },
+		section_separators = { left = "\u{e0b8}", right = "\u{e0ba}" },
+		component_separators = { left = "::", right = "::" },
 	},
 	sections = {
 		lualine_a = { "mode" },
@@ -170,18 +171,22 @@ require("lualine").setup({
 				shorting_target = 0,
 				symbols = { modified = "[+]", readonly = "", unnamed = "" },
 			},
-			"diagnostics",
+			{ "filetype", colored = false, icons_enabled = false },
 		},
 		lualine_c = {
-			{ "branch", icon = { "\u{e0a0}", color = { fg = colors.text } } },
+			"diagnostics",
+		},
+		lualine_x = {
 			{
 				"diff",
 				colored = true,
-				symbols = { added = "+", modified = "~", removed = "-" },
+				symbols = { added = "+", modified = "*", removed = "-" },
 			},
+			{ "branch", icon = { "\u{e0a0}", color = { fg = colors.text } } },
 		},
-		lualine_x = { { "lsp_status", icon = " ", symbols = { separator = " | " } } },
-		lualine_y = { { "filetype", colored = false, icon = { align = "right" } } },
+		lualine_y = {
+			{ "lsp_status", icons_enabled = false, symbols = { separator = " :: " } },
+		},
 		lualine_z = { "progress", "location" },
 	},
 })
@@ -277,20 +282,35 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- blink
 require("blink-cmp").setup({
 	keymap = {
-		["<C-f>"] = { "show_and_insert", "fallback" },
-		["<C-p>"] = { "select_prev", "fallback" },
-		["<C-n>"] = { "select_next", "fallback" },
-		["<Esc>"] = { "cancel", "fallback" },
-		["<C-e>"] = { "show_documentation", "fallback" },
-		["<C-y>"] = { "hide_documentation", "fallback" },
+		["<C-e>"] = { "show_and_insert", "fallback" }, --    CTRL+E (show completion menu)
+		["<C-y>"] = { "accept", "fallback" }, --             CTRL+Y (accept currently selected)
+		["<C-n>"] = { "select_next", "fallback" }, --        CTRL+N (next option)
+		["<C-p>"] = { "select_prev", "fallback" }, --        CTRL+P (previous option)
+		["<C-s>"] = { "show_documentation", "fallback" }, -- CTRL+S (show documentation)
+		["<Esc>"] = { "cancel", "fallback" }, --                ESC (cancel completion)
 	},
 	appearance = { nerd_font_variant = "normal" },
 	fuzzy = { implementation = "prefer_rust" },
 	completion = {
 		trigger = {
+			show_in_snippet = false,
+			show_on_backspace_after_accept = false,
+			show_on_backspace_after_insert_enter = false,
 			show_on_keyword = false,
 			show_on_trigger_character = false,
+			show_on_accept_on_trigger_character = false,
 			show_on_insert_on_trigger_character = false,
 		},
 	},
+})
+-- render-markdown
+require("render-markdown").setup({
+	checkbox = {
+		bullet = true,
+		unchecked = { icon = "󰄱 " },
+		checked = { icon = "󰱒 " },
+		custom = { todo = { rendered = "󰄗 " } },
+		scope_priority = nil,
+	},
+	heading = { position = "inline" },
 })
