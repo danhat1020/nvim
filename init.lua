@@ -158,8 +158,8 @@ require("lualine").setup({
 	options = {
 		icons_enabled = true,
 		theme = my_theme,
-		section_separators = { left = "\u{e0bc}", right = "\u{e0be}" },
-		component_separators = { left = "\u{e0bd}", right = "\u{e0bf}" },
+		section_separators = {},
+		component_separators = { left = "|", right = "|" },
 	},
 	sections = {
 		lualine_a = { "mode" },
@@ -180,7 +180,7 @@ require("lualine").setup({
 				symbols = { added = "+", modified = "~", removed = "-" },
 			},
 		},
-		lualine_x = { { "lsp_status", icon = " ", symbols = { separator = " \u{e0bf} " } } },
+		lualine_x = { { "lsp_status", icon = " ", symbols = { separator = " | " } } },
 		lualine_y = { { "filetype", colored = false, icon = { align = "right" } } },
 		lualine_z = { "progress", "location" },
 	},
