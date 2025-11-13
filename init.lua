@@ -33,6 +33,7 @@ vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", { silent = true, noremap = true
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- center when jumping up half page
 vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, noremap = true }) -- making a file executable
 vim.keymap.set("n", "<leader>/", "/", { noremap = true }) -- regular search
+vim.keymap.set({ "i", "v", "c", "x" }, "<C-c>", "<Esc>", { silent = true, noremap = true })
 -- autocmds
 vim.api.nvim_create_autocmd("TextYankPost", { -- highlight on yank
 	group = vim.api.nvim_create_augroup("HighlightYank", {}),
