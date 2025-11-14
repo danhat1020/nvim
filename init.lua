@@ -19,6 +19,7 @@ vim.o.swapfile = false
 vim.o.undofile = true
 vim.o.winborder = "single"
 vim.o.showmode = false
+vim.o.cursorline = true
 -- keymaps
 vim.g.mapleader = " "
 vim.keymap.set({ "n", "v" }, ";", ":", { noremap = true })
@@ -87,6 +88,7 @@ require("vague").setup({
 		keyword_return = "none",
 		builtin_types = "none",
 	},
+	colors = { line = "#0D0D0D" },
 })
 vim.cmd.colorscheme("vague")
 -- treesitter
