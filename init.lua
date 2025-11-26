@@ -34,7 +34,6 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz") -- center when jumping down half page
 vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { silent = true, noremap = true }) -- move selected lines down
 vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", { silent = true, noremap = true }) -- move selected lines up
 vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, noremap = true }) -- making a file executable
-vim.keymap.set("n", "<leader>/", "/", { noremap = true }) -- regular search
 -- autocmds
 vim.api.nvim_create_autocmd("TextYankPost", { -- highlight on yank
 	group = vim.api.nvim_create_augroup("HighlightYank", {}),
@@ -200,7 +199,7 @@ vim.keymap.set("n", "<leader>sh", fzf_lua.helptags, { silent = true, noremap = t
 vim.keymap.set("n", "<leader>sw", fzf_lua.grep_cword, { silent = true, noremap = true }) -- grep word under cursor
 vim.keymap.set("n", "<leader>sW", fzf_lua.grep_cWORD, { silent = true, noremap = true }) -- grep WORD under cursor
 vim.keymap.set("n", "<leader>sb", fzf_lua.buffers, { silent = true, noremap = true }) -- find existing buffers
-vim.keymap.set("n", "/", fzf_lua.lgrep_curbuf, { silent = true, noremap = true }) -- grep string in current buffer
+vim.keymap.set("n", "<leader>/", fzf_lua.lgrep_curbuf, { silent = true, noremap = true }) -- grep string in current buffer
 -- lspconfig
 local servers = {
 	clangd = {},
