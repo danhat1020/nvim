@@ -211,6 +211,7 @@ local servers = {
 	glsl_analyzer = {},
 	bashls = {},
 	marksman = {},
+	basedpyright = { settings = { basedpyright = { analysis = { typeCheckingMode = "basic" } } } },
 }
 for server, config in pairs(servers) do
 	vim.lsp.config(server, config)
@@ -224,6 +225,7 @@ vim.list_extend(ensure_installed, {
 	"beautysh",
 	"ast_grep",
 	"rustfmt",
+	"ruff",
 })
 require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 -- mason
