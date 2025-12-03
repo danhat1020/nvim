@@ -186,7 +186,7 @@ require("oil").setup({
 	view_options = { show_hidden = true },
 	float = { padding = 0 },
 })
-vim.keymap.set("n", "-", "<CMD>Oil --float<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { silent = true, noremap = true })
 -- fzf lua
 require("fzf-lua").setup({
 	winopts = { height = 1.0, width = 1.0, row = 0.5, col = 0.5, backdrop = 0, title = "Fzf-lua", title_pos = "left" },
