@@ -20,6 +20,7 @@ vim.o.undofile = true
 vim.o.winborder = "single"
 vim.o.showmode = false
 vim.o.cursorline = true
+vim.o.guicursor = ""
 -- keymaps
 vim.g.mapleader = " "
 vim.keymap.set({ "i", "v", "c", "x" }, "<C-c>", "<Esc>", { silent = true, noremap = true }) -- send esc instead of ctrl+c
@@ -34,6 +35,8 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz") -- center when jumping down half page
 vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { silent = true, noremap = true }) -- move selected lines down
 vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", { silent = true, noremap = true }) -- move selected lines up
 vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, noremap = true }) -- making a file executable
+vim.keymap.set("n", "<Space>", "<Nop>") -- unbind space in normal mode
+vim.keymap.set("n", "<BS>", "<Nop>") -- unbind backspace in normal mode
 -- autocmds
 vim.api.nvim_create_autocmd("TextYankPost", { -- highlight on yank
 	group = vim.api.nvim_create_augroup("HighlightYank", {}),
@@ -87,7 +90,7 @@ require("vague").setup({
 		keyword_return = "none",
 		builtin_types = "none",
 	},
-	colors = { line = "#0D0D0D" },
+	colors = { line = "#0C0C0C" },
 })
 vim.cmd.colorscheme("vague")
 -- treesitter
@@ -115,7 +118,7 @@ require("nvim-treesitter.configs").setup({
 	modules = {},
 })
 -- lualine
-local colors = { text = "#e0e0e0", hl = "#282828", bg = "#181818" }
+local colors = { text = "#e0e0e0", hl = "#202020", bg = "#141414" }
 local my_theme = {
 	normal = {
 		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
@@ -178,13 +181,20 @@ vim.cmd("hi StatusLine guibg=NONE")
 -- dressing
 require("dressing").setup({})
 -- oil
+_G.oil_winbar_dir = function()
+	local dir = require("oil").get_current_dir()
+	dir = dir:gsub("/home/slick", "~")
+	return "    " .. (dir or "")
+end
 require("oil").setup({
 	skip_confirm_for_simple_edits = true,
 	prompt_save_on_select_new_entry = false,
 	constrain_cursor = "name",
 	keymaps = { ["<Esc>"] = { "actions.close", mode = "n" }, ["<leader>cd"] = { "actions.cd", mode = "n" } },
 	view_options = { show_hidden = true },
-	float = { padding = 0 },
+	win_options = {
+		winbar = "%{v:lua.oil_winbar_dir()}",
+	},
 })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { silent = true, noremap = true })
 -- fzf lua
