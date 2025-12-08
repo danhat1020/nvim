@@ -67,6 +67,7 @@ vim.api.nvim_create_autocmd("FileType", { -- remove auto commenting
 vim.pack.add({
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/vague-theme/vague.nvim",
+
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/stevearc/dressing.nvim",
@@ -90,7 +91,7 @@ require("vague").setup({
 		keyword_return = "none",
 		builtin_types = "none",
 	},
-	colors = { line = "#0C0C0C" },
+	colors = { line = "#0C0C0C", comment = "#585858", visual = "#202020", error = "#d84c4f", warning = "#f3d268" },
 })
 vim.cmd.colorscheme("vague")
 -- treesitter
@@ -156,11 +157,11 @@ require("lualine").setup({
 		icons_enabled = true,
 		theme = my_theme,
 		section_separators = { left = "\u{e0b8}", right = "\u{e0ba}" },
-		component_separators = { left = "::", right = "::" },
+		component_separators = { left = "", right = "" },
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { { "lsp_status", icons_enabled = false, symbols = { separator = " :: " } } },
+		lualine_b = { { "lsp_status", icons_enabled = false, symbols = { separator = "  " } } },
 		lualine_c = { "diagnostics" },
 		lualine_x = {
 			{

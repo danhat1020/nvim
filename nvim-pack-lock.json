@@ -50,7 +50,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "vague.nvim": {
-      "rev": "dba2805",
+      "rev": "dba28050887c2810b5ebf9e0143b4e919bd55757",
       "src": "https://github.com/vague-theme/vague.nvim"
     }
   }
