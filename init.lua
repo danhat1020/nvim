@@ -20,23 +20,23 @@ vim.o.undofile = true
 vim.o.winborder = "single"
 vim.o.showmode = false
 vim.o.cursorline = true
-vim.o.guicursor = ""
 -- keymaps
 vim.g.mapleader = " "
-vim.keymap.set({ "i", "v", "c", "x" }, "<C-c>", "<Esc>", { silent = true, noremap = true }) -- send esc instead of ctrl+c
-vim.keymap.set({ "n", "v" }, ";", ":", { noremap = true })
 vim.keymap.set({ "n", "v" }, ":", ";", { noremap = true })
+vim.keymap.set({ "n", "v" }, ";", ":", { noremap = true })
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { silent = true, noremap = true }) -- yank to clipboard
 vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p', { silent = true, noremap = true }) -- paste from clipboard
 vim.keymap.set("v", "p", '"_dP', { silent = true, noremap = true }) -- paste without overwriting register
 vim.keymap.set({ "n", "v" }, "x", '"_x', { silent = true, noremap = true }) -- delete character without copying to register
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- center when jumping up half page
 vim.keymap.set("n", "<C-d>", "<C-d>zz") -- center when jumping down half page
+vim.keymap.set("n", "G", "Gzz") -- center when jumping to bottom of file
 vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", { silent = true, noremap = true }) -- move selected lines down
 vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", { silent = true, noremap = true }) -- move selected lines up
 vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, noremap = true }) -- making a file executable
 vim.keymap.set("n", "<Space>", "<Nop>") -- unbind space in normal mode
 vim.keymap.set("n", "<BS>", "<Nop>") -- unbind backspace in normal mode
+vim.keymap.set("n", "<leader>so", ":update<CR>:source %<CR>", { silent = true, noremap = true })
 -- autocmds
 vim.api.nvim_create_autocmd("TextYankPost", { -- highlight on yank
 	group = vim.api.nvim_create_augroup("HighlightYank", {}),
@@ -66,11 +66,9 @@ vim.api.nvim_create_autocmd("FileType", { -- remove auto commenting
 -- plugins
 vim.pack.add({
 	"https://github.com/nvim-tree/nvim-web-devicons",
-	"https://github.com/vague-theme/vague.nvim",
-
+	"https://github.com/dgox16/oldworld.nvim",
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	"https://github.com/nvim-lualine/lualine.nvim",
-	"https://github.com/stevearc/dressing.nvim",
 	"https://github.com/stevearc/oil.nvim",
 	"https://github.com/ibhagwan/fzf-lua",
 	"https://github.com/williamboman/mason.nvim",
@@ -79,21 +77,13 @@ vim.pack.add({
 	"https://github.com/neovim/nvim-lspconfig",
 	{ src = "https://github.com/Saghen/blink.cmp", version = "v1.7.0" },
 	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
+	"https://github.com/stevearc/dressing.nvim",
 })
 -- colortheme
-require("vague").setup({
-	transparent = true,
-	style = {
-		boolean = "none",
-		comments = "none",
-		headings = "none",
-		strings = "none",
-		keyword_return = "none",
-		builtin_types = "none",
-	},
-	colors = { line = "#0C0C0C", comment = "#585858", visual = "#202020", error = "#d84c4f", warning = "#f3d268" },
-})
-vim.cmd.colorscheme("vague")
+require("oldworld").setup({ variant = "oled", integrations = { lsp = true, markdown = true, treesitter = true } })
+vim.cmd.colorscheme("oldworld")
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#0c0c0c" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#303030" })
 -- treesitter
 require("nvim-treesitter.configs").setup({
 	auto_install = false,
@@ -119,44 +109,47 @@ require("nvim-treesitter.configs").setup({
 	modules = {},
 })
 -- lualine
-local colors = { text = "#e0e0e0", hl = "#202020", bg = "#141414" }
+local colors = {
+	text = "#e0e0e0",
+	bg = "#181818",
+	normal = "#404040",
+	insert = "#46334D",
+	visual = "#33334D",
+	command = "#4D3339",
+	replace = "#4D4633",
+}
 local my_theme = {
 	normal = {
-		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
+		a = { fg = colors.text, bg = colors.normal, gui = "bold" },
 		b = { fg = colors.text, bg = colors.bg },
 		c = { fg = colors.text },
-		z = { fg = colors.text, bg = colors.hl },
 	},
 	insert = {
-		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
+		a = { fg = colors.text, bg = colors.insert, gui = "bold" },
 		b = { fg = colors.text, bg = colors.bg },
 		c = { fg = colors.text },
-		z = { fg = colors.text, bg = colors.hl },
 	},
 	visual = {
-		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
+		a = { fg = colors.text, bg = colors.visual, gui = "bold" },
 		b = { fg = colors.text, bg = colors.bg },
 		c = { fg = colors.text },
-		z = { fg = colors.text, bg = colors.hl },
 	},
 	command = {
-		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
+		a = { fg = colors.text, bg = colors.command, gui = "bold" },
 		b = { fg = colors.text, bg = colors.bg },
 		c = { fg = colors.text },
-		z = { fg = colors.text, bg = colors.hl },
 	},
 	replace = {
-		a = { fg = colors.text, bg = colors.hl, gui = "bold" },
+		a = { fg = colors.text, bg = colors.replace, gui = "bold" },
 		b = { fg = colors.text, bg = colors.bg },
 		c = { fg = colors.text },
-		z = { fg = colors.text, bg = colors.hl },
 	},
 }
 require("lualine").setup({
 	options = {
 		icons_enabled = true,
 		theme = my_theme,
-		section_separators = { left = "\u{e0b8}", right = "\u{e0ba}" },
+		section_separators = {},
 		component_separators = { left = "", right = "" },
 	},
 	sections = {
@@ -179,8 +172,6 @@ require("lualine").setup({
 	},
 })
 vim.cmd("hi StatusLine guibg=NONE")
--- dressing
-require("dressing").setup({})
 -- oil
 _G.oil_winbar_dir = function()
 	local dir = require("oil").get_current_dir()
@@ -193,9 +184,7 @@ require("oil").setup({
 	constrain_cursor = "name",
 	keymaps = { ["<Esc>"] = { "actions.close", mode = "n" }, ["<leader>cd"] = { "actions.cd", mode = "n" } },
 	view_options = { show_hidden = true },
-	win_options = {
-		winbar = "%{v:lua.oil_winbar_dir()}",
-	},
+	win_options = { winbar = "%{v:lua.oil_winbar_dir()}" },
 })
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { silent = true, noremap = true })
 -- fzf lua
@@ -215,29 +204,25 @@ vim.keymap.set("n", "<leader>/", fzf_lua.lgrep_curbuf, { silent = true, noremap 
 local servers = {
 	clangd = {},
 	rust_analyzer = {},
-	lua_ls = {},
 	ts_ls = {},
 	html = {},
 	cssls = {},
 	glsl_analyzer = {},
 	bashls = {},
 	marksman = {},
+	omnisharp = { cmd = { "omnisharp" }, enable_roslyn_analyzers = true, organize_imports_on_format = true },
 	basedpyright = { settings = { basedpyright = { analysis = { typeCheckingMode = "basic" } } } },
 }
 for server, config in pairs(servers) do
 	vim.lsp.config(server, config)
 	vim.lsp.enable(server)
 end
+vim.lsp.enable("lua_ls")
 local ensure_installed = vim.tbl_keys(servers or {})
-vim.list_extend(ensure_installed, {
-	"stylua",
-	"prettierd",
-	"prettier",
-	"beautysh",
-	"ast_grep",
-	"rustfmt",
-	"ruff",
-})
+vim.list_extend(
+	ensure_installed,
+	{ "stylua", "prettierd", "prettier", "beautysh", "ast_grep", "rustfmt", "ruff", "csharpier" }
+)
 require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 -- mason
 require("mason").setup({})
@@ -246,6 +231,7 @@ require("mason-lspconfig").setup({ ensure_installed = {}, automatic_installation
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
 	callback = function(ev)
+		vim.diagnostic.config({ virtual_text = true })
 		local options = { buffer = ev.buf, silent = true }
 		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, options) -- LSP format file
 		vim.keymap.set({ "n", "x" }, "<leader>lc", vim.lsp.buf.code_action, options) -- See available code actions
@@ -262,7 +248,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		local filetype = vim.bo.filetype
 		if vim.bo.modified == true and mode == "n" and filetype ~= "oil" then
 			vim.lsp.buf.format()
-		else
 		end
 	end,
 })
@@ -270,11 +255,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 require("blink-cmp").setup({
 	keymap = {
 		["<C-e>"] = { "show_and_insert", "fallback" }, --    CTRL+E (show completion menu)
-		["<C-y>"] = { "accept", "fallback" }, --             CTRL+Y (accept currently selected)
+		["<Tab>"] = { "accept", "fallback" }, --                TAB (accept currently selected)
 		["<C-n>"] = { "select_next", "fallback" }, --        CTRL+N (next option)
 		["<C-p>"] = { "select_prev", "fallback" }, --        CTRL+P (previous option)
-		["<C-s>"] = { "show_documentation", "fallback" }, -- CTRL+S (show documentation)
-		["<Esc>"] = { "cancel", "fallback" }, --                ESC (cancel completion)
+		["<C-k>"] = { "show_documentation", "fallback" }, -- CTRL+K (show documentation)
+		["<Esc>"] = { "hide", "fallback" }, --                ESC (cancel completion)
 	},
 	appearance = { nerd_font_variant = "normal" },
 	fuzzy = { implementation = "prefer_rust" },
@@ -301,3 +286,5 @@ require("render-markdown").setup({
 	},
 	heading = { position = "inline" },
 })
+-- dressing
+require("dressing").setup({ input = { trim_prompt = false } })

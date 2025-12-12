@@ -6,7 +6,7 @@
       "version": "'v1.7.0'"
     },
     "dressing.nvim": {
-      "rev": "2d7c2db",
+      "rev": "2d7c2db2507fa3c4956142ee607431ddb2828639",
       "src": "https://github.com/stevearc/dressing.nvim"
     },
     "fzf-lua": {
@@ -45,13 +45,13 @@
       "rev": "7e1cd77",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "oldworld.nvim": {
+      "rev": "d0af80cf6bd5d17789cd1214a8054fe1cf23fc22",
+      "src": "https://github.com/dgox16/oldworld.nvim"
+    },
     "render-markdown.nvim": {
       "rev": "6a744f0",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
-    },
-    "vague.nvim": {
-      "rev": "dba28050887c2810b5ebf9e0143b4e919bd55757",
-      "src": "https://github.com/vague-theme/vague.nvim"
     }
   }
 }
