@@ -1,12 +1,14 @@
--- autocommands
-vim.api.nvim_create_autocmd("TextYankPost", { -- highlight on yank
+-- highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("HighlightYank", {}),
 	pattern = "*",
 	callback = function()
 		vim.hl.on_yank()
 	end,
 })
-vim.api.nvim_create_autocmd("BufReadPost", { -- restore cursor to previous position
+
+-- restore cursor to previous position
+vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function(args)
 		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
 		local line_count = vim.api.nvim_buf_line_count(args.buf)
@@ -18,7 +20,9 @@ vim.api.nvim_create_autocmd("BufReadPost", { -- restore cursor to previous posit
 		end
 	end,
 })
-vim.api.nvim_create_autocmd("FileType", { -- remove auto commenting
+
+-- remove auto commenting
+vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("no_auto_comment", {}),
 	callback = function()
 		vim.opt_local.formatoptions:remove({ "c", "r", "o" })

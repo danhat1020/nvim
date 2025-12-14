@@ -20,8 +20,14 @@ require("lazy").setup({
 		{ import = "config.plugins" },
 		{ import = "config.plugins.lsp" },
 	},
-	checker = { enabled = true, notify = false },
-	change_detection = { enabled = true, notify = false },
+	checker = {
+		enabled = true,
+		notify = false,
+	},
+	change_detection = {
+		enabled = true,
+		notify = false,
+	},
 })
 
 require("config.settings.lspcmd")

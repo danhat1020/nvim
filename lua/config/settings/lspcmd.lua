@@ -1,4 +1,4 @@
--- lsp settings
+-- setup lsp keymaps
 local fzf_lua = require("fzf-lua")
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
@@ -14,6 +14,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>lR", fzf_lua.lsp_references, options) -- Show LSP references
 	end,
 })
+
+-- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
 		local mode = vim.api.nvim_get_mode().mode
