@@ -5,7 +5,7 @@ return {
 		local colors = {
 			text = "#e0e0e0",
 			bg = "#181818",
-			normal = "#404040",
+			normal = "#282828",
 			insert = "#46334D",
 			visual = "#33334D",
 			command = "#4D3339",
