@@ -31,3 +31,25 @@ require("lazy").setup({
 })
 
 require("config.settings.lspcmd")
+
+local col_picker = require("colorscheme-picker")
+
+col_picker.setup({
+	picker = "fzf-lua",
+	include_stock = false,
+	colors = {
+		transparent = true,
+		cursor_line = "#0c0c0c",
+		line_number_current = "#e0e0e0",
+		line_number = "#202020",
+	},
+	style = {
+		bold = false,
+		italic = false,
+		underline = true,
+	},
+	keymaps = {
+		pick = "<leader>sc",
+		print = "<leader>pc",
+	},
+})

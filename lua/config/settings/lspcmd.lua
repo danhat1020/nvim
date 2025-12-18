@@ -3,7 +3,6 @@ local fzf_lua = require("fzf-lua")
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
 	callback = function(ev)
-		vim.diagnostic.config({ virtual_text = true })
 		local options = { buffer = ev.buf, silent = true }
 		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, options) -- LSP format file
 		vim.keymap.set({ "n", "x" }, "<leader>lc", vim.lsp.buf.code_action, options) -- See available code actions

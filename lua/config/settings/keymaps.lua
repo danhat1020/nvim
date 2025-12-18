@@ -33,3 +33,6 @@ vim.keymap.set({ "n", "v" }, "<BS>", "<Nop>")
 
 -- source vimrc
 vim.keymap.set("n", "<leader>so", ":update<CR>:source %<CR>", { silent = true, noremap = true })
+
+Colorschemes = {}
+Current = ""
