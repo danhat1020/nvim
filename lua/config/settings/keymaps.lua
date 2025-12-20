@@ -1,6 +1,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- normal esc behaviour on ctrl+c
+vim.keymap.set({ "i", "v", "x" }, "<C-c>", "<Esc>", { silent = true, noremap = true })
+
 -- swap ; and :
 vim.keymap.set({ "n", "v" }, ":", ";", { noremap = true })
 vim.keymap.set({ "n", "v" }, ";", ":", { noremap = true })
@@ -33,6 +36,3 @@ vim.keymap.set({ "n", "v" }, "<BS>", "<Nop>")
 
 -- source vimrc
 vim.keymap.set("n", "<leader>so", ":update<CR>:source %<CR>", { silent = true, noremap = true })
-
-Colorschemes = {}
-Current = ""

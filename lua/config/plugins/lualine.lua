@@ -54,34 +54,27 @@ return {
 					{
 						"filename",
 						path = 0,
-						symbols = { modified = "[+]", readonly = "", unnamed = "", newfile = "[New]" },
-					},
-					{
-						"filetype",
-						colored = true,
-						icon = { align = "left" },
+						symbols = {
+							modified = "[+]",
+							readonly = "",
+							unnamed = "",
+							newfile = "[New]",
+						},
 					},
 				},
 				lualine_c = { "diagnostics" },
 				lualine_x = {
 					{
-						"diff",
-						colored = true,
-						symbols = { added = "+", modified = "*", removed = "-" },
-					},
-					{
-						"branch",
-						icon = {
-							"\u{e0a0}",
-							color = { fg = colors.text },
-						},
+						"lsp_status",
+						icons_enabled = false,
+						symbols = { separator = "  " },
 					},
 				},
 				lualine_y = {
 					{
-						"lsp_status",
-						icons_enabled = false,
-						symbols = { separator = "  " },
+						"filetype",
+						colored = true,
+						icon = { align = "left" },
 					},
 				},
 				lualine_z = { "progress", "location" },

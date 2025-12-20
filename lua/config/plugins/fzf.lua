@@ -1,18 +1,26 @@
 return {
 	"ibhagwan/fzf-lua",
 	config = function()
-		require("fzf-lua").setup({
+		local fzf_lua = require("fzf-lua")
+		fzf_lua.setup({
 			winopts = {
-				height = 1.0,
-				width = 1.0,
+				height = 0.8,
+				width = 0.8,
 				row = 0.5,
 				col = 0.5,
+				border = "single",
 				backdrop = 0,
 				title = "Fzf-lua",
-				title_pos = "left",
+				title_pos = "center",
+				preview = {
+					default = "bat",
+					border = "single",
+					winopts = {
+						relativenumber = true,
+					},
+				},
 			},
 		})
-		local fzf_lua = require("fzf-lua")
 		vim.keymap.set("n", "<leader>sf", fzf_lua.files, { silent = true, noremap = true }) -- find files in cwd
 		vim.keymap.set("n", "<leader>ss", fzf_lua.live_grep, { silent = true, noremap = true }) -- grep string in cwd
 		vim.keymap.set("n", "<leader>sh", fzf_lua.helptags, { silent = true, noremap = true }) -- find in help docs
