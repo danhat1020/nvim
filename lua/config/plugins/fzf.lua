@@ -4,7 +4,7 @@ return {
 		local fzf_lua = require("fzf-lua")
 		fzf_lua.setup({
 			winopts = {
-				height = 0.8,
+				height = 0.6,
 				width = 0.8,
 				row = 0.5,
 				col = 0.5,
@@ -13,12 +13,29 @@ return {
 				title = "Fzf-lua",
 				title_pos = "center",
 				preview = {
-					default = "bat",
+					default = "builtin",
 					border = "single",
 					winopts = {
 						relativenumber = true,
 					},
 				},
+			},
+			fzf_colors = {
+				true,
+				["fg"] = { "fg", "Normal" },
+				["bg"] = { "bg", "Normal" },
+				["hl"] = { "fg", "Normal" },
+				["fg+"] = { "fg", "CursorLine" },
+				["bg+"] = { "bg", "CursorLine" },
+				["hl+"] = { "fg", "CursorLine" },
+				["info"] = { "fg", "Comment" },
+				["prompt"] = { "fg", "Normal" },
+				["pointer"] = { "fg", "Normal" },
+				["marker"] = { "fg", "Normal" },
+				["spinner"] = { "fg", "Comment" },
+				["header"] = { "fg", "Comment" },
+				["gutter"] = { "bg", "Normal" },
+				["border"] = { "fg", "Comment" },
 			},
 		})
 		vim.keymap.set("n", "<leader>sf", fzf_lua.files, { silent = true, noremap = true }) -- find files in cwd
