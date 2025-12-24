@@ -1,7 +1,7 @@
 return {
 	"danhat1020/colorscheme-picker.nvim",
 	dependencies = {
-		"ibhagwan/fzf-lua",
+		"danhat1020/native-find.nvim",
 	},
 	config = function()
 		require("colorscheme-picker").setup({
@@ -18,7 +18,6 @@ return {
 				visual_mode = "#2b2830",
 			},
 			style = {
-				bold = false,
 				italic = false,
 				undercurl = false,
 			},

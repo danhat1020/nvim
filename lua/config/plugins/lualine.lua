@@ -15,27 +15,27 @@ return {
 
 		local my_theme = {
 			normal = {
-				a = { fg = colors.text, bg = colors.normal },
+				a = { fg = colors.text, bg = colors.normal, gui = "bold" },
 				b = { fg = colors.text, bg = colors.bg },
 				c = { fg = colors.text, bg = colors.t },
 			},
 			insert = {
-				a = { fg = colors.text, bg = colors.insert },
+				a = { fg = colors.text, bg = colors.insert, gui = "bold" },
 				b = { fg = colors.text, bg = colors.bg },
 				c = { fg = colors.text, bg = colors.t },
 			},
 			visual = {
-				a = { fg = colors.text, bg = colors.visual },
+				a = { fg = colors.text, bg = colors.visual, gui = "bold" },
 				b = { fg = colors.text, bg = colors.bg },
 				c = { fg = colors.text, bg = colors.t },
 			},
 			command = {
-				a = { fg = colors.text, bg = colors.command },
+				a = { fg = colors.text, bg = colors.command, gui = "bold" },
 				b = { fg = colors.text, bg = colors.bg },
 				c = { fg = colors.text, bg = colors.t },
 			},
 			replace = {
-				a = { fg = colors.text, bg = colors.replace },
+				a = { fg = colors.text, bg = colors.replace, gui = "bold" },
 				b = { fg = colors.text, bg = colors.bg },
 				c = { fg = colors.text, bg = colors.t },
 			},
