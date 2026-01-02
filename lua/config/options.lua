@@ -1,7 +1,7 @@
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.o.scrolloff = 10
+vim.o.scrolloff = 6
 vim.o.wrap = false
 
 vim.o.tabstop = 4
@@ -21,7 +21,10 @@ vim.o.termguicolors = true
 vim.o.signcolumn = "yes"
 vim.o.winborder = "single"
 vim.o.cursorline = true
+vim.o.guicursor = ""
 
 vim.o.swapfile = false
 vim.o.undofile = true
-vim.o.showmode = false
+vim.o.showmode = true
+
+require("config.statusline")
