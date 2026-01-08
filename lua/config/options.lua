@@ -21,7 +21,6 @@ vim.o.termguicolors = true
 vim.o.signcolumn = "yes"
 vim.o.winborder = "single"
 vim.o.cursorline = true
-vim.o.guicursor = ""
 
 vim.o.swapfile = false
 vim.o.undofile = true

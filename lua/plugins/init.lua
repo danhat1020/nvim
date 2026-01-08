@@ -12,15 +12,15 @@ vim.pack.add({
 	"https://github.com/vague-theme/vague.nvim",
 	"https://github.com/mellow-theme/mellow.nvim",
 	"https://github.com/slugbyte/lackluster.nvim",
+	"https://github.com/oskarnurm/koda.nvim",
 	-- color picker
 	"https://github.com/danhat1020/colorscheme-picker.nvim",
 	-- treesitter
-	"https://github.com/nvim-treesitter/nvim-treesitter",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
 	-- render markdown
 	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/MeanderingProgrammer/render-markdown.nvim",
 })
-
 require("plugins.lsp")
 require("plugins.fzf")
 require("plugins.oil")

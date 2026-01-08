@@ -3,12 +3,8 @@ require("render-markdown").setup({
 		bullet = true,
 		unchecked = { icon = "󰄱 " },
 		checked = { icon = "󰱒 " },
-		custom = {
-			todo = { rendered = "󰄗 " },
-		},
+		custom = { todo = { rendered = "󰄗 " } },
 		scope_priority = nil,
 	},
-	heading = {
-		position = "inline",
-	},
+	heading = { position = "inline" },
 })

@@ -26,8 +26,8 @@ vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, norem
 
 vim.keymap.set("n", "<leader>r", ":restart<CR>") -- restart neovim
 
--- plugins
+-- plugin management
 vim.keymap.set("n", "<leader>aps", 'ivim.pack.add({ "https://github.com/" })<Left><Left><Left><Left>') -- add plugin standalone
 vim.keymap.set("n", "<leader>api", 'o"https://github.com/",<Left><Left>') -- add plugin inside
 vim.keymap.set("n", "<leader>up", "<CMD>lua vim.pack.update()<CR>", { silent = true, noremap = true }) -- update plugins
-vim.keymap.set("n", "<leader>dp", '$T/yt":lua vim.pack.del({ "<C-r>"" })<CR><S-v>x') -- delete plugin on current line
+vim.keymap.set("n", "<leader>dp", '$T/yt":lua vim.pack.del({ "<C-r>"" })<CR><S-v>"_d') -- delete plugin on current line
