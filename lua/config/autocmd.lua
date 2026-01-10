@@ -2,10 +2,9 @@
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank({ timeout = 200 })
+		vim.highlight.on_yank()
 	end,
 })
-
 -- restore cursor to previous position
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function(args)
@@ -19,7 +18,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 	end,
 })
-
 -- remove auto commenting
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("no_auto_comment", {}),
