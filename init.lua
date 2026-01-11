@@ -13,10 +13,8 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hlsearch = false
 vim.o.incsearch = true
-vim.o.termguicolors = true
 vim.o.signcolumn = "yes"
 vim.o.winborder = "single"
-vim.o.cursorline = true
 vim.o.swapfile = false
 vim.o.undofile = true
 -- NOTE: keymaps
@@ -26,18 +24,14 @@ vim.g.maplocalleader = " "
 vim.keymap.set({ "i", "v", "x", "c" }, "<C-c>", "<Esc>", { silent = true, noremap = true }) -- use ctrl+c as escape
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- center when jumping up half page
 vim.keymap.set("n", "<C-d>", "<C-d>zz") -- center when jumping down half page
-vim.keymap.set("n", "n", "nzz") -- center when searching forward
-vim.keymap.set("n", "N", "Nzz") -- center when searching backward
 -- extra functionality
 vim.keymap.set({ "n", "v", "x" }, ";", ":") -- swap ; and :
 vim.keymap.set({ "n", "v", "x" }, ":", ";") -- ^^
-vim.keymap.set("n", "<leader>r", ":restart<CR>") -- restart neovim
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { silent = true, noremap = true }) -- yank to system clipboard
 vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p', { silent = true, noremap = true }) -- paste from system clipboard
 vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, noremap = true }) -- make file executable from within neovim
 -- plugin management
-vim.keymap.set("n", "<leader>aps", 'ivim.pack.add({ "https://github.com/" })<Left><Left><Left><Left>') -- add plugin standalone
-vim.keymap.set("n", "<leader>api", 'o"https://github.com/",<Left><Left>') -- add plugin inside
+vim.keymap.set("n", "<leader>ap", 'o"https://github.com/",<Left><Left>') -- add plugin
 vim.keymap.set("n", "<leader>up", "<CMD>lua vim.pack.update()<CR>", { silent = true, noremap = true }) -- update plugins
 vim.keymap.set("n", "<leader>dp", '$T/yt":lua vim.pack.del({ "<C-r>"" })<CR><S-v>"_d') -- delete plugin on current line
 -- unbinds
@@ -88,7 +82,6 @@ require("vague").setup({
 	bold = false,
 	italic = false,
 	colors = {
-		line = "#0a0a0a",
 		search = "#c0c2c8",
 		comment = "#606060",
 		string = "#a89ab2",
@@ -107,7 +100,6 @@ local servers = {
 	glsl_analyzer = {},
 	bashls = {},
 	marksman = {},
-	basedpyright = { settings = { basedpyright = { analysis = { typeCheckingMode = "basic" } } } },
 }
 for server, config in pairs(servers) do
 	vim.lsp.config(server, config)
@@ -171,12 +163,7 @@ fzf.setup({
 		title_flags = false,
 		preview = { default = "builtin", border = "single", winopts = { relativenumber = true } },
 	},
-	hls = {
-		border = "Comment",
-		title = "WinBar",
-		preview_border = "Comment",
-		preview_title = "WinBar",
-	},
+	hls = { border = "Comment", title = "WinBar", preview_border = "Comment", preview_title = "WinBar" },
 	files = { cwd_prompt = false, color_icons = false },
 	grep = { color_icons = false },
 })
