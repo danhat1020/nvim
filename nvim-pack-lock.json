@@ -1,7 +1,7 @@
 {
   "plugins": {
     "fzf-lua": {
-      "rev": "b8d1356b7120f5cf111709cb2fa504096248fb26",
+      "rev": "940ffbfb54842b1b2bdd7aacc35db998a952b616",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "mason-lspconfig.nvim": {
@@ -26,7 +26,7 @@
       "version": "'master'"
     },
     "nvim-web-devicons": {
-      "rev": "6788013bb9cb784e606ada44206b0e755e4323d7",
+      "rev": "803353450c374192393f5387b6a0176d0972b848",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {

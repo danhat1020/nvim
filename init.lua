@@ -24,27 +24,24 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- quality of life
 vim.keymap.set({ "i", "v", "x", "c" }, "<C-c>", "<Esc>", { silent = true, noremap = true }) -- use ctrl+c as escape
-vim.keymap.set("v", "p", '"_dP', { silent = true, noremap = true }) -- paste without overwriting register
-vim.keymap.set({ "n", "v" }, "x", '"_x', { silent = true, noremap = true }) -- delete character without copying to register
 vim.keymap.set("n", "<C-u>", "<C-u>zz") -- center when jumping up half page
-vim.keymap.set("n", "<C-d>", "<C-d>zz") -- center wheh jumping down half page
-vim.keymap.set("n", "G", "Gzz") -- center when jumping to end of buffer
+vim.keymap.set("n", "<C-d>", "<C-d>zz") -- center when jumping down half page
+vim.keymap.set("n", "n", "nzz") -- center when searching forward
+vim.keymap.set("n", "N", "Nzz") -- center when searching backward
 -- extra functionality
 vim.keymap.set({ "n", "v", "x" }, ";", ":") -- swap ; and :
 vim.keymap.set({ "n", "v", "x" }, ":", ";") -- ^^
+vim.keymap.set("n", "<leader>r", ":restart<CR>") -- restart neovim
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { silent = true, noremap = true }) -- yank to system clipboard
 vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p', { silent = true, noremap = true }) -- paste from system clipboard
 vim.keymap.set("n", "<leader>mx", "<CMD>!chmod +x %<CR>", { silent = true, noremap = true }) -- make file executable from within neovim
-vim.keymap.set("n", "<leader>r", ":restart<CR>") -- restart neovim
--- unbinds
-vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>") -- unbind space in normal and visual mode
-vim.keymap.set({ "n", "v" }, "<BS>", "<Nop>") -- unbind backspace in normal and visual mode
-vim.keymap.set({ "n", "v", "x", "i", "c" }, "<C-q>", "<Nop>") -- unbind ctrl+q in all modes
 -- plugin management
 vim.keymap.set("n", "<leader>aps", 'ivim.pack.add({ "https://github.com/" })<Left><Left><Left><Left>') -- add plugin standalone
 vim.keymap.set("n", "<leader>api", 'o"https://github.com/",<Left><Left>') -- add plugin inside
 vim.keymap.set("n", "<leader>up", "<CMD>lua vim.pack.update()<CR>", { silent = true, noremap = true }) -- update plugins
 vim.keymap.set("n", "<leader>dp", '$T/yt":lua vim.pack.del({ "<C-r>"" })<CR><S-v>"_d') -- delete plugin on current line
+-- unbinds
+vim.keymap.set({ "n", "v", "x", "i", "c" }, "<C-q>", "<Nop>") -- unbind ctrl+q in all modes
 -- NOTE: autocommands
 vim.api.nvim_create_autocmd("TextYankPost", { -- highlight on yank
 	group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
@@ -141,21 +138,17 @@ vim.list_extend(ensure_installed, {
 })
 require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 require("mason").setup({})
-require("mason-lspconfig").setup({
-	ensure_installed = {},
-	automatic_installation = false,
-})
+require("mason-lspconfig").setup({ ensure_installed = {}, automatic_installation = false })
 -- setup lsp keymaps
 local fzf_lua = require("fzf-lua")
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
-	callback = function(ev)
+	callback = function()
 		local opts = { silent = true, noremap = true }
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts) -- Show documentation (hover)
-		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts) -- [L]SP [F]ormat file
+		vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts) -- [L]SP [F]ormat
 		vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts) -- [L]SP [R]ename
-		vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, opts) -- [L]SP see available code [A]ctions
-		vim.keymap.set("n", "<leader>lc", vim.diagnostic.open_float, opts) -- [L]SP show diagnostics for [C]urrent line
+		vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, opts) -- [L]SP see available [C]ode actions
 		vim.keymap.set("n", "<leader>ld", fzf_lua.diagnostics_document, opts) -- [L]SP show document [D]iagnostics
 	end,
 })
@@ -169,11 +162,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		end
 	end,
 })
-local fg_col = "#f0f0f0"
-local bg_col = "#202020"
-local border_col = "#808080"
-vim.api.nvim_set_hl(0, "FzfTitleBarHl", { fg = fg_col, bg = bg_col, bold = true })
-vim.api.nvim_set_hl(0, "FzfBorderHl", { fg = border_col, bg = "NONE" })
 local fzf = require("fzf-lua")
 -- NOTE: fzf lua
 fzf.setup({
@@ -184,17 +172,17 @@ fzf.setup({
 		preview = { default = "builtin", border = "single", winopts = { relativenumber = true } },
 	},
 	hls = {
-		border = "FzfBorderHl",
-		title = "FzfTitleBarHl",
-		preview_border = "FzfBorderHl",
-		preview_title = "FzfTitleBarHl",
+		border = "Comment",
+		title = "WinBar",
+		preview_border = "Comment",
+		preview_title = "WinBar",
 	},
 	files = { cwd_prompt = false, color_icons = false },
 	grep = { color_icons = false },
 })
-vim.keymap.set("n", "<leader>sf", fzf.files, { silent = true, noremap = true }) -- find files in cwd
-vim.keymap.set("n", "<leader>ss", fzf.live_grep, { silent = true, noremap = true }) -- grep string in cwd
-vim.keymap.set("n", "<leader>sh", fzf.helptags, { silent = true, noremap = true }) -- find in help docs
+vim.keymap.set("n", "<leader>sf", fzf.files, { silent = true, noremap = true }) -- [S]earch [F]iles in cwd
+vim.keymap.set("n", "<leader>ss", fzf.live_grep, { silent = true, noremap = true }) -- [S]earch [S]tring in cwd
+vim.keymap.set("n", "<leader>sh", fzf.helptags, { silent = true, noremap = true }) -- [F]ind in [H]elp docs
 -- NOTE: oil
 require("oil").setup({
 	columns = {},
@@ -246,7 +234,7 @@ require("todo-comments").setup({})
 local M = {}
 local function set_hl()
 	vim.api.nvim_set_hl(0, "SLFileName", { fg = "#e0e0e0", bg = "NONE", bold = true })
-	vim.api.nvim_set_hl(0, "SLFilePath", { link = "EndOfBuffer" })
+	vim.api.nvim_set_hl(0, "SLFilePath", { link = "Comment" })
 	vim.api.nvim_set_hl(0, "SLOffWhite", { fg = "#e0e0e0", bg = "NONE" })
 end
 set_hl()
@@ -281,13 +269,13 @@ function M.diagnostics()
 	}
 	local parts = {}
 	if counts.errors > 0 then
-		table.insert(parts, "%#DiagnosticError#!!-" .. counts.errors)
+		table.insert(parts, "%#DiagnosticError#!! " .. counts.errors)
 	end
 	if counts.warns > 0 then
-		table.insert(parts, "%#DiagnosticWarn#!-" .. counts.warns)
+		table.insert(parts, "%#DiagnosticWarn#! " .. counts.warns)
 	end
 	if counts.hints > 0 then
-		table.insert(parts, "%#DiagnosticHint#?-" .. counts.hints)
+		table.insert(parts, "%#DiagnosticHint#? " .. counts.hints)
 	end
 	if #parts == 0 then
 		return ""
