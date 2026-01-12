@@ -54,7 +54,13 @@ vim.cmd.colorscheme("vague")
 vim.cmd("hi StatusLine guibg=NONE")
 -- lsp setup (ts_ls, html, cssls)
 require("mason").setup({})
-local servers = { "clangd", "bashls", "marksman", "emmylua_ls" }
+local servers = { "clangd", "bash-language-server", "marksman", "emmylua_ls" }
+local all = vim.list_extend(vim.list_extend({}, servers), { "ast-grep", "beautysh", "prettierd", "stylua" })
+for _, server in ipairs(all) do
+    if not require("mason-registry").is_installed(server) then
+        vim.cmd("MasonInstall " .. server)
+    end
+end
 vim.lsp.enable(servers)
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
