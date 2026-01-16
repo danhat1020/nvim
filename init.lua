@@ -1,85 +1,83 @@
--- options
-vim.o.number = true
-vim.o.relativenumber = true
-vim.o.scrolloff = 6
-vim.o.wrap = false
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.expandtab = true
-vim.o.smartindent = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.hlsearch = false
-vim.o.incsearch = true
-vim.o.winborder = "single"
-vim.o.signcolumn = "yes"
-vim.o.swapfile = false
-vim.o.undofile = true
-vim.o.guicursor = ""
--- keymaps
-vim.g.mapleader = " "
-vim.keymap.set({ "i", "v", "x" }, "<C-c>", "<Esc>", { silent = true, noremap = true })   -- use ctrl+c as escape
-vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y', { silent = true, noremap = true }) -- yank to system clipboard
-vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p', { silent = true, noremap = true }) -- paste from system clipboard
--- autocommands
-vim.api.nvim_create_autocmd("TextYankPost", {                                            -- highlight on yank
-    group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-})
--- plugins
 vim.pack.add({
-    { src = "https://github.com/vague-theme/vague.nvim" },
-    { src = "https://github.com/williamboman/mason.nvim" },
-    { src = "https://github.com/stevearc/oil.nvim" },
-    { src = "https://github.com/nvim-mini/mini.pick" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter",          version = "master" },
-    { src = "https://github.com/nvim-tree/nvim-web-devicons" },
-    { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'master' }, -- better code highlighting
+    { src = 'https://github.com/nvim-mini/mini.pick' },                                 -- fuzzy finder
+    { src = 'https://github.com/stevearc/oil.nvim' },                                   -- file explorer
+    { src = 'https://github.com/vague-theme/vague.nvim' },                              -- colorscheme
+    { src = 'https://github.com/williamboman/mason.nvim' },                             -- LSP plugin manager
 })
--- colorscheme
-require("vague").setup({
-    transparent = true,
-    italic = false,
-    colors = { string = "#aba1b6", func = "#947ea1", number = "#c8aa95" },
+-- configure plugins
+require('nvim-treesitter.configs').setup({
+    ensure_installed = { 'lua', 'c', 'markdown', 'bash' },
+    highlight = { enable = true },
 })
-vim.cmd.colorscheme("vague")
-vim.cmd("hi StatusLine guibg=NONE")
--- lsp setup (ts_ls, html, cssls)
-require("mason").setup({})
-local servers = { "clangd", "bash-language-server", "marksman", "emmylua_ls" }
-local all = vim.list_extend(vim.list_extend({}, servers), { "ast-grep", "beautysh", "prettierd", "stylua" }) -- formatters
-for _, server in ipairs(all) do
-    if not require("mason-registry").is_installed(server) then vim.cmd("MasonInstall " .. server) end
+require('mini.pick').setup({
+    window = { prompt_caret = '|', prompt_prefix = '$ ' },
+})
+require('oil').setup({
+    columns = {},
+    view_options = { show_hidden = true },
+})
+require('vague').setup({
+    bold = false,
+    colors = { string = '#c0a8da', func = '#9f83ac', number = '#6e94b2', inactiveBg = '#0d0d0d', bg = 'NONE' },
+})
+-- configure lsp
+require('mason').setup({})
+local servers = { 'clangd', 'bash-language-server', 'marksman', 'emmylua_ls' }
+local all = vim.list_extend(vim.list_extend({}, servers), { 'ast-grep', 'beautysh', 'prettierd', 'stylua' }) -- formatters
+for _, server in ipairs(all) do                                                                              -- for each server
+    if not require('mason-registry').is_installed(server) then                                               -- if not installed
+        vim.cmd("MasonInstall " .. server)                                                                   -- install
+    end
 end
 vim.lsp.enable(servers)
-vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+-- set options
+vim.o.number = true          -- line numbers
+vim.o.relativenumber = true  -- line numbers based on distance to current line
+vim.o.tabstop = 4            -- tab width 4
+vim.o.shiftwidth = 4         -- tab width 4
+vim.o.expandtab = true       -- turn tabs into spaces
+vim.o.smartindent = true     -- keeps or changes indent based on code context
+vim.o.wrap = false           -- turns wrapping off
+vim.o.swapfile = false       -- swapfile is annoying
+vim.o.undofile = true        -- allows persistent undo across restarts
+vim.o.ignorecase = true      -- ignore case when searching...
+vim.o.smartcase = true       -- ...unless uppercase letter is used
+vim.o.hlsearch = false       -- do not highlight all search matches
+vim.o.winborder = 'single'   -- add single border around windows
+vim.o.signcolumn = 'yes'     -- adds column on left for consistency
+vim.cmd.colorscheme("vague") -- set colorscheme
+-- set keymaps
+vim.g.mapleader = " "
+vim.keymap.set({ 'n', 'v', 'x' }, ';', ':')                                                     -- no shift for command mode
+vim.keymap.set({ 'n', 'v', 'x' }, ':', ';')                                                     -- shift for find next
+vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y', { silent = true, noremap = true })        -- yank to system clipboard
+vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { silent = true, noremap = true })        -- paste from system clipboard
+vim.keymap.set('n', '<leader>o', '<CMD>e #<CR>', { silent = true, noremap = true })             -- switch to previous buffer
+vim.keymap.set('v', '<S-k>', 'okok')                                                            -- move selection up
+vim.keymap.set('v', '<S-j>', 'jojo')                                                            -- move selection down
+-- set plugin keymaps
+vim.keymap.set('n', '<leader>sf', '<CMD>Pick files<CR>', { silent = true, noremap = true })     -- search files in cwd
+vim.keymap.set('n', '<leader>sh', '<CMD>Pick help<CR>', { silent = true, noremap = true })      -- search helptags
+vim.keymap.set('n', '<leader>ss', '<CMD>Pick grep_live<CR>', { silent = true, noremap = true }) -- search string
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { silent = true, noremap = true })                     -- open file explorer
+-- set lsp keymaps
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', { clear = true }),
     callback = function(args)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true, noremap = true })                -- Show documentation (hover)
-        vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, { silent = true, noremap = true })      -- [L]SP [F]ormat
-        vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { silent = true, noremap = true })      -- [L]SP [R]ename
-        vim.keymap.set("n", "<leader>lc", vim.lsp.buf.code_action, { silent = true, noremap = true }) -- [L]SP see available [C]ode actions
-        vim.cmd("set completeopt+=noselect")
-        -- auto format on save
-        vim.api.nvim_create_autocmd("BufWritePre", {
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, { silent = true, noremap = true })                -- show documentation
+        vim.keymap.set('n', '<leader>ld', vim.lsp.buf.definition, { silent = true, noremap = true })  -- go to definition
+        vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { silent = true, noremap = true }) -- code actions
+        vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { silent = true, noremap = true })      -- lsp format buffer
+        vim.cmd('set completeopt+=noselect')                                                          -- don't select autocomplete
+        vim.api.nvim_create_autocmd('BufWritePre', {                                                  -- format on save
             buffer = args.buf,
-            callback = function() vim.lsp.buf.format { async = false, id = args.data.client_id } end,
+            callback = function() vim.lsp.buf.format({ async = false, id = args.data.client_id }) end,
         })
     end,
 })
--- oil
-require("oil").setup({ view_options = { show_hidden = true } })
-vim.keymap.set("n", "-", "<CMD>Oil<CR>", { silent = true, noremap = true })
--- mini.pick
-require("mini.pick").setup({ window = { config = { anchor = 'NE', row = 0, col = 200, width = 60, height = 20, } } })
-vim.keymap.set("n", "<leader>sf", ":Pick files<CR>", { silent = true, noremap = true })
-vim.keymap.set("n", "<leader>sh", ":Pick help<CR>", { silent = true, noremap = true })
--- treesitter
-require("nvim-treesitter.configs").setup({
-    ensure_installed = { "lua", "c", "markdown", "bash" },
-    highlight = { enable = true },
+-- highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("HighlightYank", { clear = true }),
+    callback = function() vim.highlight.on_yank({ timeout = 200 }) end,
 })
--- other
-require("render-markdown").setup({ heading = { position = "inline" } })
