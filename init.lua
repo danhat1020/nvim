@@ -6,7 +6,8 @@ vim.pack.add({
     { src = 'https://github.com/nvim-mini/mini.pick' },                                   -- fuzzy finder
     { src = 'https://github.com/slugbyte/lackluster.nvim' },                              -- colorscheme
     { src = 'https://github.com/saghen/blink.cmp',                version = 'v1.8.0' },   -- completion
-    { src = 'https://github.com/williamboman/mason.nvim' } })                             -- LSP plugin manager
+    { src = 'https://github.com/williamboman/mason.nvim' },                               -- LSP plugin manager
+})
 -- configure plugins
 require('harpoon'):setup()
 require('nvim-treesitter.configs').setup({ ensure_installed = { 'lua', 'c', 'markdown', 'bash' }, highlight = { enable = true } })
@@ -60,12 +61,12 @@ vim.keymap.set({ 'n', 'v', 'x' }, '<leader>y', '"+y', { silent = true, noremap =
 vim.keymap.set({ 'n', 'v', 'x' }, '<leader>p', '"+p', { silent = true, noremap = true }) -- paste from system clipboard
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { silent = true, noremap = true })               -- center when jumping up
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { silent = true, noremap = true })               -- center when jumping down
-vim.keymap.set('v', '<leader>s(', 'c()<Esc>P')                                           -- surround: selection with ()
-vim.keymap.set('v', '<leader>s[', 'c[]<Esc>P')                                           -- surround: selection with []
-vim.keymap.set('v', '<leader>s{', 'c{}<Esc>P')                                           -- surround: selection with {}
-vim.keymap.set('v', '<leader>s"', 'c""<Esc>P')                                           -- surround: selection with ""
-vim.keymap.set('v', '<leader>s\'', 'c\'\'<Esc>P')                                        -- surround: selection with ''
-vim.keymap.set('v', '<leader>r', 'dvh"_xP')                                              -- surround: remove surrounding characters
+vim.keymap.set('v', '<leader>w(', 'c()<Esc>P')                                           -- wrap: selection with ()
+vim.keymap.set('v', '<leader>w[', 'c[]<Esc>P')                                           -- wrap: selection with []
+vim.keymap.set('v', '<leader>w{', 'c{}<Esc>P')                                           -- wrap: selection with {}
+vim.keymap.set('v', '<leader>w"', 'c""<Esc>P')                                           -- wrap: selection with ""
+vim.keymap.set('v', '<leader>w\'', 'c\'\'<Esc>P')                                        -- wrap: selection with ''
+vim.keymap.set('v', '<leader>r', 'dvh"_xP')                                              -- wrap: remove surrounding characters
 -- plugin keymaps
 local harpoon = require('harpoon')
 vim.keymap.set('n', '<leader>a', function() harpoon:list():add() end)                      ----> harpoon: add file
@@ -75,7 +76,7 @@ vim.keymap.set('n', '<M-w>', function() harpoon:list():select(2) end)           
 vim.keymap.set('n', '<M-e>', function() harpoon:list():select(3) end)                      ----> harpoon: select file 3
 vim.keymap.set('n', '<M-r>', function() harpoon:list():select(4) end)                      ----> harpoon: select file 4
 vim.keymap.set('n', '<leader>f', ':Pick files<CR>', { silent = true, noremap = true })     ----> mini.pick: search files
-vim.keymap.set('n', '<leader>g', ':Pick grep_live<CR>', { silent = true, noremap = true }) ----> mini.pick: grep string
+vim.keymap.set('n', '<leader>s', ':Pick grep_live<CR>', { silent = true, noremap = true }) ----> mini.pick: grep string
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>', { silent = true, noremap = true })      ----> mini.pick: search help tags
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { silent = true, noremap = true })                ----> oil: open file explorer
 -- auto commands
