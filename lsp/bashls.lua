@@ -25,5 +25,4 @@ return {
         },
     },
     filetypes = { 'bash', 'sh' },
-    root_markers = { '.git' },
 }
