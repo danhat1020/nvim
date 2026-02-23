@@ -37,14 +37,12 @@ vim.keymap.set("n", "-", ":Oil<CR>", { silent = true })
 -- fuzzy picker
 require("fzf-lua").setup({
 	winopts = {
-		height = 0.9,
-		width = 0.6,
+		height = 0.8,
+		width = 0.8,
 		row = 0.5,
 		col = 0.5,
-		border = "single",
 		backdrop = 100,
 		preview = {
-			border = "single",
 			winopts = {
 				relative_number = true,
 				cursorline = false,
@@ -60,10 +58,9 @@ vim.keymap.set("n", "<leader>ss", ":FzfLua live_grep<CR>", { silent = true })
 
 -- colorscheme
 require("vague").setup({
-	bold = true,
 	colors = {
 		bg = "none",
-		inactiveBg = "none",
+		inactiveBg = "#141414",
 		func = "#8088a0",
 		string = "#b098c8",
 		number = "#80a0b0",

@@ -19,7 +19,7 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-vim.opt.winborder = "single"
+vim.opt.winborder = "rounded"
 vim.opt.signcolumn = "yes"
 vim.opt.guicursor = ""
 

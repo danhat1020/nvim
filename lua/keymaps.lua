@@ -7,9 +7,11 @@ vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p')
 
 vim.keymap.set({ "n", "v", "x" }, "x", '"_x')
 
-for _, map in ipairs({ "()", "[]", "{}", "''", '""', "<>" }) do
-	vim.keymap.set("v", "<leader>s" .. map:sub(1, 1), "c" .. map .. "P")
-	vim.keymap.set("n", "<leader>r" .. map:sub(1, 1), "di" .. map:sub(1, 1) .. 'vh"_xP')
+for _, pairs in ipairs({ "()", "[]", "{}", "''", '""', "<>" }) do
+	-- surround
+	vim.keymap.set("v", "<leader>s" .. pairs:sub(1, 1), "c" .. pairs .. "P")
+	-- remove surrounding characters
+	vim.keymap.set("n", "<leader>r" .. pairs:sub(1, 1), "di" .. pairs:sub(1, 1) .. 'vh"_xP')
 end
 
 local plugin_remove = function()
@@ -37,5 +39,6 @@ local plugin_remove = function()
 		vim.notify("vim.pack: No plugins to remove.", vim.log.levels.WARN)
 	end
 end
-vim.keymap.set("n", "<leader>up", vim.pack.update)
+
 vim.keymap.set("n", "<leader>dp", plugin_remove)
+vim.keymap.set("n", "<leader>up", vim.pack.update)
