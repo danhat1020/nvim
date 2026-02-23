@@ -1,0 +1,41 @@
+vim.g.mapleader = " "
+
+vim.keymap.set({ "i", "v", "x" }, "<C-c>", "<Esc>")
+
+vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y')
+vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p')
+
+vim.keymap.set({ "n", "v", "x" }, "x", '"_x')
+
+for _, map in ipairs({ "()", "[]", "{}", "''", '""', "<>" }) do
+	vim.keymap.set("v", "<leader>s" .. map:sub(1, 1), "c" .. map .. "P")
+	vim.keymap.set("n", "<leader>r" .. map:sub(1, 1), "di" .. map:sub(1, 1) .. 'vh"_xP')
+end
+
+local plugin_remove = function()
+	local unused_plugins = {}
+	local all_plugins = vim.pack.get()
+
+	for _, plugin in ipairs(all_plugins) do
+		if not plugin.active then
+			local name = plugin.spec.name
+			table.insert(unused_plugins, name)
+		end
+	end
+
+	if #unused_plugins > 0 then
+		local names = table.concat(
+			vim.tbl_map(function(p)
+				return "  - " .. p
+			end, unused_plugins),
+			"\n"
+		)
+
+		vim.pack.del(unused_plugins)
+		vim.notify("vim.pack: Deleted " .. #unused_plugins .. " unused plugin(s):\n" .. names, vim.log.levels.WARN)
+	elseif #unused_plugins == 0 then
+		vim.notify("vim.pack: No plugins to remove.", vim.log.levels.WARN)
+	end
+end
+vim.keymap.set("n", "<leader>up", vim.pack.update)
+vim.keymap.set("n", "<leader>dp", plugin_remove)
