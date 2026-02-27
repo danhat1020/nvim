@@ -1,5 +1,6 @@
 return {
 	"vague-theme/vague.nvim",
+
 	config = function()
 		require("vague").setup({
 			colors = {

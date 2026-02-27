@@ -1,5 +1,6 @@
 return {
 	"ibhagwan/fzf-lua",
+
 	config = function()
 		require("fzf-lua").setup({
 			winopts = {
@@ -17,7 +18,9 @@ return {
 			},
 			fzf_opts = { ["--color"] = "bw" },
 		})
+
 		require("fzf-lua").register_ui_select()
+
 		vim.keymap.set("n", "<leader>sf", ":FzfLua files<CR>", { silent = true })
 		vim.keymap.set("n", "<leader>sb", ":FzfLua buffers<CR>", { silent = true })
 		vim.keymap.set("n", "<leader>sh", ":FzfLua helptags<CR>", { silent = true })

@@ -1,5 +1,6 @@
 return {
 	"stevearc/oil.nvim",
+
 	config = function()
 		require("oil").setup({
 			columns = {},
@@ -10,6 +11,7 @@ return {
 			watch_for_changes = true,
 			view_options = { show_hidden = true },
 		})
+
 		vim.keymap.set("n", "-", ":Oil<CR>", { silent = true })
 	end,
 }
