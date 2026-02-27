@@ -1,3 +1,4 @@
+-- set up highlights
 vim.api.nvim_set_hl(0, "StatusLineNormal", { fg = "#b8b8b8" })
 vim.api.nvim_set_hl(0, "StatusLineFileName", { fg = "#f0f0f0" })
 vim.api.nvim_set_hl(0, "StatusLineFilePath", { fg = "#808080" })
@@ -6,6 +7,7 @@ for i, group in ipairs({ "Error", "Warn", "Info" }) do
 	vim.api.nvim_set_hl(0, "StatusLine" .. group, { fg = colors[i], bold = true })
 end
 
+-- get filename (taking into account oil buffers)
 local stat_filename = function()
 	local bufname = vim.api.nvim_buf_get_name(0)
 
@@ -27,6 +29,7 @@ local stat_filename = function()
 	return "%#StatusLineFilePath#" .. dir .. "/%#StatusLineFileName#" .. file .. "%*"
 end
 
+-- set up diagnostic indication
 local stat_diagnostic = function()
 	local counts = vim.diagnostic.count(0)
 	if vim.tbl_isempty(counts) then
@@ -49,6 +52,7 @@ local stat_diagnostic = function()
 	return table.concat(parts)
 end
 
+-- set statusline function
 _G.Statusline = function()
 	return table.concat({
 		"%#StatusLineNormal#",
@@ -62,4 +66,5 @@ _G.Statusline = function()
 	})
 end
 
+-- set statusline
 vim.opt.statusline = "%!v:lua.Statusline()"

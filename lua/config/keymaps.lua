@@ -1,19 +1,22 @@
 vim.g.mapleader = " "
 
+-- use ctrl+c as escape
 vim.keymap.set({ "i", "v", "x" }, "<C-c>", "<Esc>")
 
+-- <leader>y/p to yank/paste using system clipboard
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y')
 vim.keymap.set({ "n", "v", "x" }, "<leader>p", '"+p')
 
+-- x deletes to void register
 vim.keymap.set({ "n", "v", "x" }, "x", '"_x')
 
+-- add/remove surrounding characters
 for _, pairs in ipairs({ "()", "[]", "{}", "''", '""', "<>" }) do
-	-- surround
 	vim.keymap.set("v", "<leader>s" .. pairs:sub(1, 1), "c" .. pairs .. "P")
-	-- remove surrounding characters
 	vim.keymap.set("n", "<leader>r" .. pairs:sub(1, 1), "di" .. pairs:sub(1, 1) .. 'vh"_xP')
 end
 
+-- remove unused plugins
 local plugin_remove = function()
 	local unused_plugins = {}
 	local all_plugins = vim.pack.get()
@@ -28,7 +31,7 @@ local plugin_remove = function()
 	if #unused_plugins > 0 then
 		local names = table.concat(
 			vim.tbl_map(function(p)
-				return "  - " .. p
+				return "  > " .. p
 			end, unused_plugins),
 			"\n"
 		)
