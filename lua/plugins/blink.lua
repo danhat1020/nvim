@@ -1,7 +1,6 @@
 return {
 	"saghen/blink.cmp",
 	branch = "v1.8.0",
-
 	config = function()
 		require("blink-cmp").setup({
 			completion = {
