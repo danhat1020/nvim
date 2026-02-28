@@ -17,9 +17,9 @@
       "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "https://github.com/stevearc/oil.nvim"
     },
-    "vague.nvim": {
-      "rev": "4abd79d6fbaca57bf437763d0b5bed364e4512bd",
-      "src": "https://github.com/vague-theme/vague.nvim"
+    "transparent.nvim": {
+      "rev": "8ac59883de84e9cd1850ea25cf087031c5ba7d54",
+      "src": "https://github.com/xiyaowong/transparent.nvim"
     }
   }
 }
