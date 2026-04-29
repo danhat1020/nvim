@@ -2,6 +2,7 @@
 vim.pack.add({ { src = 'https://github.com/stevearc/oil.nvim' } })
 require('oil').setup({ columns = {}, skip_confirm_for_simple_edits = true, watch_for_changes = true, view_options = { show_hidden = true } })
 -- options
+vim.o.cursorline = true
 vim.o.winborder = 'single'
 vim.o.number = true
 vim.o.relativenumber = true
@@ -22,12 +23,10 @@ vim.o.smartcase = true
 vim.o.guicursor = ''
 require('vim._core.ui2').enable()
 vim.cmd.colorscheme('silence')
--- searching
 vim.o.wildmode = 'noselect'
 vim.opt.path = '.,,*,**'
 vim.opt.grepprg = "rg --vimgrep --smart-case"
 vim.opt.grepformat = "%f:%l:%c:%m"
--- keymaps & autocmds
 vim.g.mapleader = ' '
 vim.keymap.set({ 'i', 'v', 'x' }, '<C-c>', '<Esc>')
 vim.keymap.set('n', '-', ':Oil<CR>', { silent = true })

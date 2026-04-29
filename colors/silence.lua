@@ -19,7 +19,7 @@ end
 hi("Normal",       { fg = "#a0a0a0",                        })
 hi("NormalFloat",  {                 bg = "none"            })
 hi("FloatBorder",  { fg = "#808080", bg = "none"            })
-hi("CursorLine",   {                 bg = "#555555",        })
+hi("CursorLine",   {                 bg = "#181818",        })
 hi("CursorColumn", {                 bg = "#1a1a1a",        })
 hi("LineNr",       { fg = "#b0b0b0",                        })
 hi("LineNrAbove",  { fg = "#555555",                        })
